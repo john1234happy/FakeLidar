@@ -2,13 +2,18 @@ import java.nio.ByteBuffer;
 
 public class FiringData {
     short position;
-    short reserved;
+    short reserved = 0;
     int[] returnDistance = new int[8];
     byte[] returnIntensities = new byte[8];
 
     public FiringData(short position, short reserved, int[] returnDistance, byte[] returnIntensities) {
         this.position = position;
         this.reserved = reserved;
+        this.returnDistance = returnDistance;
+        this.returnIntensities = returnIntensities;
+    }
+    public FiringData(short position, int[] returnDistance, byte[] returnIntensities) {
+        this.position = position;
         this.returnDistance = returnDistance;
         this.returnIntensities = returnIntensities;
     }

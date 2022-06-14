@@ -51,4 +51,17 @@ public class LidarPacket {
         buffer.put(data.returnPacketData().array());
         return buffer.array();
     }
+    public byte[] getBytePacketShort(){
+        ByteBuffer buffer = ByteBuffer.allocate(24);
+        buffer.putInt(packetSig);
+        buffer.putInt(messageSize);
+        buffer.putInt(timeStamp);
+        buffer.putInt(timeStampNano);
+        buffer.put(APIVM);
+        buffer.put(APIVm);
+        buffer.put(APIVP);
+        buffer.put(packetType);
+        //buffer.put(data.returnPacketData().array());
+        return buffer.array();
+    }
 }

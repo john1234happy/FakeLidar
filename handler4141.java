@@ -28,9 +28,9 @@ public class handler4141 implements Runnable {
                 lidarPackets.get(i).setTimeStampNano(h.intValue());
                 outputStream.write(lidarPackets.get(i).getBytePacket());
                 outputStream.flush();
-                File packetFile = new File("/home/germakovskij/projects/Croudview/outFileForLidarPacketCheck2.txt");
-                FileOutputStream outFile = new FileOutputStream(packetFile,true);
-                outFile.write(lidarPackets.get(i).getBytePacket());
+                //File packetFile = new File("/home/germakovskij/projects/Croudview/outFileForLidarPacketCheck2.txt");
+                //FileOutputStream outFile = new FileOutputStream(packetFile,true);
+                //outFile.write(lidarPackets.get(i).getBytePacket());
                 i++;
                 h = h + .000929260;
                 Thread.sleep(55);

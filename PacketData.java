@@ -13,6 +13,10 @@ public class PacketData {
         this.status = status;
     }
 
+    public PacketData(FiringData[] firingDatas) {
+        this.firingData = firingDatas;
+    }
+
     public FiringData[] getFiringData() {
         return firingData;
     }

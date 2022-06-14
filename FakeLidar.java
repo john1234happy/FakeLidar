@@ -2,8 +2,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.stream.Collectors;
+import java.util.Random;
 
 public class FakeLidar {
     static File packetFile;
@@ -17,9 +16,10 @@ public class FakeLidar {
                 byte[] bytes = fileInputStream.readAllBytes();
                 ByteBuffer buffer = ByteBuffer.wrap(bytes);
 
-                parse(buffer);
+                //parse(buffer);
                 //print();
-                packets.stream().sorted(Comparator.comparingInt(LidarPacket::getTimeStampNano)).collect(Collectors.toList());
+                //packets.stream().sorted(Comparator.comparingInt(LidarPacket::getTimeStampNano)).collect(Collectors.toList());
+                populate(30000);
                 System.out.println("i did it");
             }
         } catch (Exception e) {
@@ -77,6 +77,46 @@ public class FakeLidar {
             }
         }
         //new Thread(new handler4141(packets)).start();
+    }
+
+    private static void populate(int NumOfPackets){
+        Random random = new Random();
+        long seed  = random.nextLong();
+        System.out.println(seed);
+        random.setSeed(seed);
+        short s = 0;
+        //short s = (short) random.nextInt(0,10399);
+        //int rd = random.nextInt(0,20000000);
+        int rd = 2500000;
+        for(int i = 0; NumOfPackets > i; i++){
+            //short s = (short) random.nextInt(0,10399);
+            //short s = (short) random.nextInt(0,10399);
+            FiringData[] firingDatas = new FiringData[50];
+            for(int j = 0; 50 > j; j++){
+                int[] ints = new int[8];
+                byte[] bytes = new byte[8];
+                for(int n = 0 ; ints.length > n; n++){
+                    //ints[n] = random.nextInt(0,2500000);
+
+                    ints[n] = rd;
+                    //rd = rd - 5;
+                    //ints[n] = 0;
+                    bytes[n] = (byte) 120;
+                }
+               // random.nextBytes(bytes);
+                firingDatas[j] = new FiringData(s,ints,bytes);
+                s++;
+                if(s==10399){
+                    s = 0;
+                }
+                //s = (short)(s + 3);
+            }
+            PacketData packetData = new PacketData(firingDatas);
+            LidarPacket lidarPacket = new LidarPacket();
+            lidarPacket.setData(packetData);
+            packets.add(lidarPacket);
+        }
+        //make the populate function
     }
     static void print() throws IOException {
         for(int i = 0 ; packets.size() > i ; i++){
